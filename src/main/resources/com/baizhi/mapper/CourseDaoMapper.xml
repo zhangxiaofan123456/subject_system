@@ -1,0 +1,50 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.CourseDao">
+    <resultMap id="BaseResultMap" type="com.baizhi.entity.Course">
+        <id column="id" property="id"></id>
+        <result column="subject_id" property="subjectId"></result>
+        <result column="teacher_name" property="teacherName"></result>
+        <result column="day_of_week" property="dayOfWeek"></result>
+        <result column="lesson_no" property="lessonNo"></result>
+        <result column="status" property="status"></result>
+        <result column="operation" property="operation"></result>
+        <result column="origin_id" property="originId"></result>
+        <result column="student_cpy" property="studentCpy"></result>
+    </resultMap>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from course ;
+    </select>
+
+    <select id="getAllExpectCurrent" resultMap="BaseResultMap">
+        select * from course where id!=#{id};
+    </select>
+
+    <select id="getAllNeedApprove" resultMap="BaseResultMap">
+        select * from course where status='1';
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.baizhi.entity.Course">
+        insert into course(subject_id,teacher_name,day_of_week,lesson_no,status,operation,origin_id,student_cpy)
+        values (#{subjectId},#{teacherName},#{dayOfWeek},#{lessonNo},#{status},#{operation},#{originId},#{studentCpy})
+    </insert>
+
+    <delete id="delete">
+        delete from course where id=#{id}
+    </delete>
+
+    <select id="getCourseDetail" resultMap="BaseResultMap">
+        select * from course where id=#{id};
+    </select>
+    <update id="update" parameterType="com.baizhi.entity.Course">
+        update course set subject_id=#{subjectId},teacher_name=#{teacherName},day_of_week=#{dayOfWeek},lesson_no=#{lessonNo},status=#{status},
+        operation=#{operation},origin_id=#{originId},student_cpy=#{studentCpy}
+        where id=#{id}
+
+
+
+    </update>
+
+</mapper>
